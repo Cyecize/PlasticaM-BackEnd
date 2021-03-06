@@ -5,20 +5,20 @@ namespace App\Controller;
 
 
 use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\View\View;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route(path="/api")
- */
-class HomeController extends BaseController
+class HomeController extends AbstractController
 {
     /**
-     * @Rest\Get(path="/homes")
+     * Method called on each request that is not a part of the API.
+     * Always loads index.html, which will then be processed by the FE.
+     *
+     * @Rest\Get(path="/", name="index")
      * @return View
      */
-    public function home()
+    public function index()
     {
-        return $this->view('what');
+        return $this->render('index.html');
     }
 }

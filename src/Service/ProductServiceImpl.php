@@ -25,4 +25,9 @@ class ProductServiceImpl implements ProductService
     {
         return $this->repository->search($query);
     }
+
+    public function findById(int $id): ?Product
+    {
+        return $this->repository->findOneBy(['id' => $id, 'enabled' => true]);
+    }
 }

@@ -51,4 +51,19 @@ class ProductController extends BaseController
 
         return $this->view($productPage);
     }
+
+    /**
+     * @Rest\Get(path="/products/{id}", defaults={"id": -1})
+     * @param int $id
+     * @return View
+     */
+    public function getProduct(int $id): View
+    {
+        $prod = $this->productService->findById($id);
+        if ($prod == null) {
+            return $this->view(null);
+        }
+
+        return $this->view($this->modelMapper->map($prod, ProductViewModel::class));
+    }
 }

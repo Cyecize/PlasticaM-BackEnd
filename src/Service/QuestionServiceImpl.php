@@ -5,6 +5,7 @@ namespace App\Service;
 use App\BindingModel\QuestionBindingModel;
 use App\Entity\Question;
 use App\Repository\QuestionRepository;
+use App\Utils\DateUtils;
 use App\Utils\ModelMapper;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
@@ -36,7 +37,7 @@ class QuestionServiceImpl implements QuestionService
     public function createQuestion(QuestionBindingModel $bindingModel): Question
     {
         $question = $this->modelMapper->map($bindingModel, Question::class);
-        $question->setDate(new \DateTime());
+        $question->setDate(DateUtils::getNow());
         $this->entityManager->persist($question);
         $this->entityManager->flush();
         return $question;

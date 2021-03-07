@@ -20,11 +20,15 @@ class MailingServiceImpl implements MailingService
      */
     private $twig;
 
+    private $logger;
+
     public function __construct(MailSendingService $mailerService,
-                                Environment $twig)
+                                Environment $twig,
+                                LogService $logService)
     {
         $this->mailerService = $mailerService;
         $this->twig = $twig;
+        $this->logger = $logService;
     }
 
     public function sendQuestionToAdmins(Question $question): void
@@ -39,8 +43,9 @@ class MailingServiceImpl implements MailingService
 
             $this->mailerService->sendHtml("Plastica-M - Question", $content, $receiver);
             //$this->logger->log(self::LOGGER_LOCATION, sprintf("Sent email to %s admins", count($admins)));
+            $this->logger->log(self::LOGGER_LOCATION, sprintf("Sent email to admins"));
         } catch (\Exception $ex) {
-            //$this->logger->log(self::LOGGER_LOCATION, sprintf("Error while sending emails: %s" ,$ex->getMessage()));
+            $this->logger->log(self::LOGGER_LOCATION, sprintf("Error while sending emails: %s" ,$ex->getMessage()));
             throw new ApiException("Error while sending email!", $ex);
         }
     }

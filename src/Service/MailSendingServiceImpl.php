@@ -18,31 +18,18 @@ class MailSendingServiceImpl implements MailSendingService
     private const LOG_LOCATION = "MailSender";
     private const MAIL_FAIL_FORMAT = "Mail failed!, subject: %s  receiver: %s";
 
-    /**
-     * @var \Swift_Mailer
-     */
     private $mailer;
 
-    //TODO: Add logger service
-//    /**
-//     * @var LogService
-//     */
-//    private $logger;
+    private $logger;
 
-    /**
-     * @var string
-     */
     private $senderEmail;
 
-    /**
-     * @var string
-     */
     private $from;
 
-    public function __construct(\Swift_Mailer $mailer)
+    public function __construct(\Swift_Mailer $mailer, LogService $logger)
     {
         $this->mailer = $mailer;
-        //$this->logger = $logger;
+        $this->logger = $logger;
         $this->senderEmail = $_ENV[Config::ENV_MAILER_USER];
         $this->from = $_ENV[Config::ENV_MAILER_SENDER_NAME];
     }
@@ -61,7 +48,7 @@ class MailSendingServiceImpl implements MailSendingService
         try {
             $this->mailer->send($swiftMailerMsg);
         } catch (Swift_TransportException $e) {
-            // $this->logger->log(self::LOG_LOCATION, sprintf(self::MAIL_FAIL_FORMAT, $subject, $receiver));
+            $this->logger->log(self::LOG_LOCATION, sprintf(self::MAIL_FAIL_FORMAT, $subject, $receiver));
         }
     }
 
@@ -79,7 +66,7 @@ class MailSendingServiceImpl implements MailSendingService
         try {
             $this->mailer->send($swiftMailerMsg);
         } catch (Swift_TransportException $e) {
-            //$this->logger->log(self::LOG_LOCATION, sprintf(self::MAIL_FAIL_FORMAT, $subject, $receiver));
+            $this->logger->log(self::LOG_LOCATION, sprintf(self::MAIL_FAIL_FORMAT, $subject, $receiver));
         }
     }
 }

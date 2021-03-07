@@ -59,6 +59,7 @@ class ModelMapper
             }
         }
 
+        $property->setAccessible(true);
         return $property->getValue($instance);
     }
 

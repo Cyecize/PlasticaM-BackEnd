@@ -19,7 +19,7 @@ class SortQuery
     /**
      * @Serializer\Type(name="string")
      * @Assert\NotBlank(message="fieldCannotBeNull")
-     * @Assert\Regex(pattern="/^(asc|desc)$/", message="invalidValue")
+     * @Assert\Regex(pattern="/^(asc|desc)$/i", message="invalidValue")
      */
     private $direction;
 

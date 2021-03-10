@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\BindingModel\ProductQuery;
+use App\Entity\Image;
 use App\Service\ProductService;
 use App\Utils\ModelMapper;
 use App\ViewModel\ProductViewModel;
@@ -64,6 +65,11 @@ class ProductController extends BaseController
             return $this->view(null);
         }
 
-        return $this->view($this->modelMapper->map($prod, ProductViewModel::class));
+        $viewModel = $this->modelMapper->map($prod, ProductViewModel::class);
+        $viewModel->setGallery($prod->getImages()->map(function (Image $image) {
+            return $image->getImageUrl();
+        })->toArray());
+
+        return $this->view($viewModel);
     }
 }

@@ -4,7 +4,10 @@
 namespace App\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * Product
@@ -24,7 +27,7 @@ class Product
 
     /**
      * @var int
-     * @ORM\Column (name="category_id")
+     * @ORM\Column (name="category_id", type="integer")
      */
     private $categoryId;
 
@@ -77,9 +80,15 @@ class Product
      */
     private $enabled;
 
+    /**
+     * @var Image[]
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="product", fetch="LAZY")
+     */
+    private $images;
+
     public function __construct()
     {
-
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): int
@@ -180,5 +189,15 @@ class Product
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
+    }
+
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function setImages($images): void
+    {
+        $this->images = $images;
     }
 }

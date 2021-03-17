@@ -66,6 +66,10 @@ class ProductController extends BaseController
         }
 
         $viewModel = $this->modelMapper->map($prod, ProductViewModel::class);
+
+        $viewModel->setCategoryNameEn($prod->getCategory()->getNameEn());
+        $viewModel->setCategoryNameBg($prod->getCategory()->getNameBg());
+
         $viewModel->setGallery($prod->getImages()->map(function (Image $image) {
             return $image->getImageUrl();
         })->toArray());

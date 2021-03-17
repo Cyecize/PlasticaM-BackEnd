@@ -24,6 +24,10 @@ class ProductViewModel
 
     private $imageGallery;
 
+    private $categoryNameEn;
+
+    private $categoryNameBg;
+
     public function setGallery(?array $gallery): void
     {
         $this->imageGallery = [$this->imageUrl];
@@ -32,5 +36,15 @@ class ProductViewModel
         }
 
         $this->imageGallery = array_merge($this->imageGallery, $gallery);
+    }
+
+    public function setCategoryNameBg($categoryNameBg): void
+    {
+        $this->categoryNameBg = $categoryNameBg;
+    }
+
+    public function setCategoryNameEn($categoryNameEn): void
+    {
+        $this->categoryNameEn = $categoryNameEn;
     }
 }

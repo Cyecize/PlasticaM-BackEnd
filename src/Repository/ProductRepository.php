@@ -32,7 +32,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
                 $qb->expr()->like('p.descriptionEn', ':search')
             ));
 
-            $qb->setParameter('search', '%' . $productQuery->getSearch() . '%');
+            $qb->setParameter('search', '%' . preg_replace('/\s+/', '%', $productQuery->getSearch() . '%'));
         }
 
         if ($productQuery->getSort() != null) {

@@ -15,4 +15,6 @@ class Config
     public const ENV_MAILER_SENDER_NAME = "MAILER_SENDER_NAME";
 
     public const ENV_TOKEN_EXPIRE_MINUTES = "TOKEN_EXPIRE_MINUTES";
+
+    public const ENV_TOKEN_HEADER_NAME = "TOKEN_HEADER_NAME";
 }

@@ -11,6 +11,9 @@ use App\Utils\ModelMapper;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserServiceImpl implements UserService
 {
@@ -109,5 +112,36 @@ class UserServiceImpl implements UserService
     function findByRole(string $role): array
     {
         return $this->userRepo->findByRoleName($role);
+    }
+
+    public function loadUserByUsername($username)
+    {
+        $user = $this->userRepo->findByUsernameOrEmail($username);
+
+        if ($user == null) {
+            throw new UsernameNotFoundException(sprintf("User with username or email '%s' does not exist", $username));
+        }
+
+        return $user;
+    }
+
+    public function refreshUser(UserInterface $user)
+    {
+        if (!$user instanceof User) {
+            throw new UnsupportedUserException(
+                sprintf('Instances of "%s" are not supported.', get_class($user))
+            );
+        }
+
+        $username = $user->getUsername();
+
+        return $this->loadUserByUsername($username);
+    }
+
+    public function supportsClass($class)
+    {
+        return User::class == $class
+            || is_subclass_of(User::class, $class)
+            || str_contains($class, User::class);
     }
 }

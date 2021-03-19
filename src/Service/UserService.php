@@ -11,8 +11,9 @@ namespace App\Service;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Exception\ApiException;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-interface UserService
+interface UserService extends UserProviderInterface
 {
     /**
      * @param User $user

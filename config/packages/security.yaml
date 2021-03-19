@@ -26,6 +26,7 @@ security:
             anonymous: lazy
             provider: custom_user_provider
             logout: ~
+            stateless: true
 
             guard:
               authenticators:

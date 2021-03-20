@@ -99,9 +99,9 @@ class UserServiceImpl implements UserService
         return $this->userRepo->find($id);
     }
 
-    function findOneByUsername(string $username): ?User
+    function findOneByUsernameOrEmail(string $username): ?User
     {
-        return $this->userRepo->findOneBy(array('username' => $username));
+        return $this->userRepo->findByUsernameOrEmail($username);
     }
 
     function findAll(): array
@@ -116,7 +116,7 @@ class UserServiceImpl implements UserService
 
     public function loadUserByUsername($username)
     {
-        $user = $this->userRepo->findByUsernameOrEmail($username);
+        $user = $this->findOneByUsernameOrEmail($username);
 
         if ($user == null) {
             throw new UsernameNotFoundException(sprintf("User with username or email '%s' does not exist", $username));
@@ -127,15 +127,7 @@ class UserServiceImpl implements UserService
 
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof User) {
-            throw new UnsupportedUserException(
-                sprintf('Instances of "%s" are not supported.', get_class($user))
-            );
-        }
-
-        $username = $user->getUsername();
-
-        return $this->loadUserByUsername($username);
+        throw new UnsupportedUserException('No need to refresh user on stateless security.');
     }
 
     public function supportsClass($class)

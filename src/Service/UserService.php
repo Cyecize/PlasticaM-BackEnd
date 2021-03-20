@@ -59,7 +59,7 @@ interface UserService extends UserProviderInterface
      * @param string $username
      * @return User
      */
-    function findOneByUsername(string $username): ?User;
+    function findOneByUsernameOrEmail(string $username): ?User;
 
     /**
      * @return User[]

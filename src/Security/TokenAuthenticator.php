@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
@@ -105,7 +104,8 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     {
         $data = [
             // you may want to customize or obfuscate the message first
-            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
+            //'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
+            'message' => 'Authentication failed!'
 
             // or to translate this message
             // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())

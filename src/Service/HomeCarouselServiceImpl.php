@@ -17,6 +17,6 @@ class HomeCarouselServiceImpl implements HomeCarouselService
 
     public function getAllVisible(): array
     {
-        return $this->repository->findBy(['enabled' => true]);
+        return $this->repository->findBy(['enabled' => true], ['orderNumber' => 'ASC']);
     }
 }

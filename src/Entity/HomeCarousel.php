@@ -63,6 +63,12 @@ class HomeCarousel
      */
     private $enabled;
 
+    /**
+     * @var integer|null
+     * @ORM\Column(name="order_number", type="integer")
+     */
+    private $orderNumber;
+
     public function __construct()
     {
 
@@ -146,5 +152,15 @@ class HomeCarousel
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
+    }
+
+    public function isOrderNumber(): ?int
+    {
+        return $this->orderNumber;
+    }
+
+    public function setOrderNumber(?int $orderNumber): void
+    {
+        $this->orderNumber = $orderNumber;
     }
 }

@@ -6,6 +6,8 @@ class ProductSpecificationViewModel
 {
     private $id;
 
+    private $productId;
+
     private $titleBg;
 
     private $titleEn;

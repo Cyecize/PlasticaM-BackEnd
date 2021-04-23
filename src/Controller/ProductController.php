@@ -6,7 +6,9 @@ namespace App\Controller;
 use App\BindingModel\ProductQuery;
 use App\Entity\Image;
 use App\Service\ProductService;
+use App\Service\ProductSpecificationService;
 use App\Utils\ModelMapper;
+use App\ViewModel\ProductSpecificationViewModel;
 use App\ViewModel\ProductViewModel;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Route;
@@ -22,12 +24,16 @@ class ProductController extends BaseController
 
     private $productService;
 
+    private $productSpecificationService;
+
     private $modelMapper;
 
     public function __construct(ProductService $productService,
-                                ModelMapper $modelMapper)
+                                ModelMapper $modelMapper,
+                                ProductSpecificationService $productSpecificationService)
     {
         $this->productService = $productService;
+        $this->productSpecificationService = $productSpecificationService;
         $this->modelMapper = $modelMapper;
     }
 
@@ -73,6 +79,10 @@ class ProductController extends BaseController
         $viewModel->setGallery($prod->getImages()->map(function (Image $image) {
             return $image->getImageUrl();
         })->toArray());
+
+        $viewModel->setSpecifications(array_map(function ($specification) {
+            return $this->modelMapper->map($specification, ProductSpecificationViewModel::class);
+        }, $this->productSpecificationService->getByProductId($id)));
 
         return $this->view($viewModel);
     }

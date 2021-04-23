@@ -28,6 +28,8 @@ class ProductViewModel
 
     private $categoryNameBg;
 
+    private $specifications;
+
     public function setGallery(?array $gallery): void
     {
         $this->imageGallery = [$this->imageUrl];
@@ -46,5 +48,10 @@ class ProductViewModel
     public function setCategoryNameEn($categoryNameEn): void
     {
         $this->categoryNameEn = $categoryNameEn;
+    }
+
+    public function setSpecifications(array $specifications): void
+    {
+        $this->specifications = $specifications;
     }
 }
